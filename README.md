@@ -1,2 +1,0 @@
-# Jumper
-Python game Parachute
