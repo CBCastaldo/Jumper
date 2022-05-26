@@ -10,9 +10,24 @@ class Parachute:
         self._parachute = []
         #We would have to put the parachute image above
     
-    def get_word():
-        word = random.choice(word_list)
-        return word.lower()
+    def _get_word():
+        _word = random.choice(word_list)
+        return _word.lower()
+    
+    # def word_spacing(_word):
+    #   word_spacing = "_ " * len(_word)
+    #   return word_spacing
+
+    def word_as_list(_word, new_letter):
+      word_spacing = "_ " * len(_word)
+      word_as_list = [_word]
+      indices = [i for i, letter in enumerate(_word) if letter == new_letter]
+      for index in indices:
+        word_as_list[index] == new_letter
+      word_spacing = ''.join(word_as_list)
+      return word_spacing
+      
+
 
     def parachute(lives):
         parachute = [
