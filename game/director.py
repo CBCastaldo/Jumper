@@ -18,8 +18,11 @@ class Director:
 
     def get_inputs(self):
         #Shows guess status
+        print(self._parachute)
         #Shows parachute status
         #prompts guess
+        new_letter = self._guess.get_guess()
+        self._service.guessed_letters.append(new_letter)
         return
 
     def do_updates(self):
