@@ -2,8 +2,8 @@ from game.guess import Guess
 from game.parachute import Parachute
 from game.service import Service
 
-class Director:
-    def __init__(self):
+class Director: #Directs the game.
+    def __init__(self): #Lets the Class initialize the object's attributes.
         self._is_playing = True
         self._guess = Guess()
         self._parachute = Parachute()
@@ -14,13 +14,13 @@ class Director:
         self._game_over = "Game Over"
         self._victory = "Congratulations! You win!"
 
-    def start_game(self):
+    def start_game(self): #Tells the game while functions to run while the game is running.
         while self._is_playing:
             self.get_inputs()
             self.do_updates()
             self.do_outputs()
 
-    def get_inputs(self):
+    def get_inputs(self): #Gathers the guess input
         self._service.read_letter(self._guess.get_guess())
         self._service.print_list(self._parachute.get_parachute())
         letter = input(self._prompt)
@@ -33,12 +33,12 @@ class Director:
         self._guess.set_letter(letter)
         self._guess.check_victory(self._guess._guess)
 
-    def do_updates(self):
+    def do_updates(self): #Updates the underscored word with the inputed letter.
         self._guess.update_guess(self._parachute.get_word())
         self._parachute.cut_line(self._guess.get_cut())
         # self._guess.check_victory(self._guess._guess)
 
-    def do_outputs(self):
+    def do_outputs(self): #Ends the game if lives are completely used, Ends the game if won (Fails), keeps the game running and sends it back for another input.
         # while self._guess.check_victory(self._parachute._word) == False:
         if self._parachute.get_lives() == 0:
             self._service.read_letter(self._game_over)
