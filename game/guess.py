@@ -1,29 +1,37 @@
-# from game.parachute import Parachute
-from pickle import FALSE
-
-
+from game.parachute import Parachute
 class Guess:
 
     def __init__(self):
-        # self._guess = "_ " * len(word)
-        self._guess = False
-        return 
-    
-    def update_guess(self, parachute):
-        # Here is where we would keep track of letters that were correct among the guess
-        pass
+        self._parachute = Parachute()
+        self._guess  = ("_ " * len(self._parachute._word)) + "\n"
+        self._letter = ""
+        self._cut = "F"
 
-    def word_as_list(_word, new_letter):
-      word_spacing = "_ " * len(_word)
-      word_as_list = [_word]
-      indices = [i for i, letter in enumerate(_word) if letter == new_letter]
-      for index in indices:
-        word_as_list[index] == new_letter
-      word_spacing = ''.join(word_as_list)
-      return word_spacing
+    
+    def update_guess(self, word):
+        if self._letter in word:
+            index = word.index(self._letter)
+            self._guess = self._guess[:(index * 2)] + self._letter + self._guess[(index * 2) + 1:]
+            self._cut = "F"
+        else:
+            self._cut = "T"
+
+    def check_guess(self, word):
+        return ((self._guess.replace(" ", "")) == word)
 
     def get_guess(self):
-        guess = input('Guess a letter [a-z]: ').lower()
-        return guess
+        return self._guess
 
+    def set_letter(self, letter):
+        self._letter = letter
+    
+    def get_cut(self):
+        return self._cut
+
+    def check_victory(self, word):
+        # new = ''
+        # for x in word:
+        #     new += x
+        # return new
+       return word.replace(' ', '')
     

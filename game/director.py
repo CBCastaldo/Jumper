@@ -1,7 +1,6 @@
 from game.guess import Guess
 from game.parachute import Parachute
 from game.service import Service
-# _word = self._parachute._get_word
 
 class Director:
     def __init__(self):
@@ -9,7 +8,11 @@ class Director:
         self._guess = Guess()
         self._parachute = Parachute()
         self._service = Service()
-        _new_word = self._parachute._get_word
+        # self._guess.check_victory == False
+        # self.victory = self._guess.check_victory(self._parachute._word)
+        self._prompt = "Guess a letter [a-z]: "
+        self._game_over = "Game Over"
+        self._victory = "Congratulations! You win!"
 
     def start_game(self):
         while self._is_playing:
@@ -17,37 +20,44 @@ class Director:
             self.do_updates()
             self.do_outputs()
 
-
     def get_inputs(self):
-        #Shows guess status
-        print(self._parachute.word_as_list)
-        #Shows parachute status
-        print(self._parachute.parachute[0])
-        #prompts guess
-        new_letter = self._guess.get_guess()
-        return new_letter
+        self._service.read_letter(self._guess.get_guess())
+        self._service.print_list(self._parachute.get_parachute())
+        letter = input(self._prompt)
+        if len(letter) != 1:
+            print('Please enter a single letter.')
+            letter = input(self._prompt)
+        elif letter.isalpha() == False:
+            print('Please enter a letter.')
+            letter = input(self._prompt)
+        self._guess.set_letter(letter)
+        self._guess.check_victory(self._guess._guess)
 
-    def do_updates(self, new_letter, _new_word):
-        #Checks if letter was in word
-        while not self._guess._guess and self._parachute._lives > 0:
-            if len(new_letter) == 1 and new_letter.isalpha():
-                if new_letter in self._service.guessed_letters():
-                    print(f'You have already guessed the letter {new_letter}.')
-                elif new_letter not in self._parachute._get_word():
-                    print(f'{new_letter} is not in the word.')
-                    self._parachute._lives -= 1
-                    self._service.guessed_letters.append(new_letter)
-                else:
-                    print(f'Good guess! {new_letter} is in the word!')
-                    self._service.guessed_letters.append(new_letter)
-                    self._parachute.word_as_list(_new_word, new_letter)
-                    if '_' not in self._parachute.word_as_list:
-                        self._guess._guess = True
-
-        return
+    def do_updates(self):
+        self._guess.update_guess(self._parachute.get_word())
+        self._parachute.cut_line(self._guess.get_cut())
+        # self._guess.check_victory(self._guess._guess)
 
     def do_outputs(self):
-        #Updates lives accordingly
-        #Updates parachute image
-        #Checks if game is over
-        return
+        # while self._guess.check_victory(self._parachute._word) == False:
+        if self._parachute.get_lives() == 0:
+            self._service.read_letter(self._game_over)
+            self._service.print_list(self._parachute.get_parachute())
+            self._is_playing = False
+
+        # elif self._guess.check_victory(self._parachute._word) == True:
+        #     self._service.read_letter(self._victory)
+        #     self._is_playing = False
+            
+
+        # elif self._guess.check_guess(self._parachute.get_word()):
+        #     self._is_playing = True
+        #     self._service.read_letter(self._guess.get_guess())
+        elif self._guess.check_victory(self._guess._guess) == self._parachute._word:
+            self._service.read_letter(self._victory)
+            self._is_playing = False
+        else:
+            self._is_playing = True
+        # else:
+        #     self._service.read_letter(self._victory)
+        #     self._is_playing = False
