@@ -15,6 +15,11 @@ root                    (project root folder)
 +-- __main__.py         (program entry point)
 +-- README.md           (general info)
 
+## Contributions
+Devin: Created the base code framework, services, and the majority of guess.py. 
+Chelsea: Created the parachute, and the word list.
+The directory was created by both Devin and Chelsea.
+
 ## Authors
 
     Chelsea Castaldo
