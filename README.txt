@@ -6,9 +6,17 @@
 
     You have 4 lives before you are out of parachute, so guess the 5 letter word as quickly as you can.  Guessing a correct letter doesn't waste a life.
 
+## Project Structure
+The project files and folders are organized as follows:
+```
+root                    (project root folder)
++-- Jumper              (source code for game)
+  +-- game              (specific classes)
++-- __main__.py         (program entry point)
++-- README.md           (general info)
+
 ## Authors
 
     Chelsea Castaldo
     Devin Sigler
     Jay Andrews
-    Johnathon Staples
